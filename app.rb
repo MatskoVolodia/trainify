@@ -5,12 +5,10 @@ require 'sinatra'
 require "sinatra/activerecord"
 
 Dir.glob('./models/*.rb') { |file| require file }
+Dir.glob('./routes/*.rb') { |file| require file }
 
 class App < Sinatra::Base
-  register Sinatra::ActiveRecordExtension
+  set :views, File.expand_path(File.join(__FILE__, '../views'))
 
-  get '/' do
-    @cities = City.all
-    slim :index
-  end
+  register Sinatra::ActiveRecordExtension
 end

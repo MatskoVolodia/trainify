@@ -1,0 +1,13 @@
+table
+  thead
+    th From
+    th Departure time
+    th To
+    th Arrival time
+  tbody
+  - @routes.each do |route|
+    tr
+      td =route[:from]
+      td =route[:departure_datetime]
+      td =route[:to]
+      td =route[:arrival_datetime]
