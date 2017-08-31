@@ -9,7 +9,7 @@ Dir.glob('./routes/*.rb') { |file| require file }
 
 class App < Sinatra::Base
   set :views, File.expand_path(File.join(__FILE__, '../views'))
-  set :public_folder, File.expand_path(File.join(__FILE__, '../assets'))
+  set :public_folder, File.expand_path(File.join(__FILE__, '../public'))
 
   register Sinatra::ActiveRecordExtension
 end

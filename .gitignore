@@ -12,6 +12,8 @@
 /tmp/
 .idea/
 Gemfile.lock
+*.css
+.sass-cache/
 
 # Used by dotenv library to load environment variables.
 # .env

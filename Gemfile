@@ -8,6 +8,8 @@ gem 'sinatra-activerecord'
 gem 'rake'
 gem 'require_all'
 gem 'minitest'
+gem 'sass'
+gem 'compass'
 
 group :development do
   gem 'shotgun'

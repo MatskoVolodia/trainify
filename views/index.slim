@@ -1,27 +1,31 @@
-form action='/' method='post'
-  input#start
-  input#start-id type="hidden" name='departure_id'
-  input#destination
-  input#destination-id type="hidden" name='arrival_id'
-  input type='submit' value='Search'
+.search-form-wrapper
+  form action='/' method='post'
+    label From:
+    input#start
+    input#start-id type="hidden" name='departure_id'
+    label To:
+    input#destination
+    input#destination-id type="hidden" name='arrival_id'
+    input type='submit' value='Search'
 
-table
-  thead
-    tr
-      th Departure station
-      th Departure time
-      th Arrival station
-      th Arrival time
-  tbody
-    - if @routes && !@routes.empty?
-      - @routes.each do |route|
-        tr
-          td=route[:departure_station]
-          td=route[:departure_datetime]
-          td=route[:arrival_station]
-          td=route[:arrival_datetime]
-    - else
+.table-wrapper
+  table
+    thead
       tr
-        td.empty-table colspan='4' Nothing to show
+        th Departure station
+        th Departure time
+        th Arrival station
+        th Arrival time
+    tbody
+      - if @routes && !@routes.empty?
+        - @routes.each do |route|
+          tr
+            td=route[:departure_station]
+            td=route[:departure_datetime]
+            td=route[:arrival_station]
+            td=route[:arrival_datetime]
+      - else
+        tr
+          td.empty-table colspan='4' Nothing to show
 
 script src='/js/dashboard.js'

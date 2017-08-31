@@ -6,8 +6,12 @@ class App < Sinatra::Base
   end
 
   post '/' do
-    query = request.params.map{|key, value| "#{key}=#{value}"}.join('&')
-    redirect "/search/#{query}"
+    if params[:departure_id].nil? || params[:departure_id].empty? || params[:arrival_id].nil? || params[:arrival_id].empty?
+      redirect '/'
+    else
+      query = request.params.map{|key, value| "#{key}=#{value}"}.join('&')
+      redirect "/search/#{query}"
+    end
   end
 
   get '/search/departure_id=:departure_id&arrival_id=:arrival_id?' do
