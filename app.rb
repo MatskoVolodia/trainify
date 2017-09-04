@@ -4,6 +4,8 @@ Bundler.require
 require 'sinatra'
 require 'sinatra/activerecord'
 
+Dir.glob('./operations/*.rb') { |file| require file }
+Dir.glob('./policies/*.rb') { |file| require file }
 Dir.glob('./models/*.rb') { |file| require file }
 Dir.glob('./routes/*.rb') { |file| require file }
 

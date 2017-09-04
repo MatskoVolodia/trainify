@@ -1,4 +1,4 @@
-class App < Sinatra::Base 
+class App < Sinatra::Base
   get '/' do
     @cities = City.all
 
@@ -6,10 +6,10 @@ class App < Sinatra::Base
   end
 
   post '/' do
-    if params[:departure_id].nil? || params[:departure_id].empty? || params[:arrival_id].nil? || params[:arrival_id].empty?
+    if Validation::dashboard_params_invalid?(params)
       redirect '/'
     else
-      query = request.params.map{|key, value| "#{key}=#{value}"}.join('&')
+      query = Query::build_query(request.params)
       redirect "/search/#{query}"
     end
   end
@@ -17,18 +17,20 @@ class App < Sinatra::Base
   get '/search/departure_id=:departure_id&arrival_id=:arrival_id?' do
     @routes = Route.where({ start_id: params[:departure_id], destination_id: params[:arrival_id]}).map do |route|
       {
-          departure_station: City.find_by_id(params[:departure_id]).title,
-          departure_datetime: route.departure_datetime,
-          arrival_station: City.find_by_id(params[:arrival_id]).title,
-          arrival_datetime: route.arrival_datetime
+          route_id:           route.id,
+          departure_station:  City.find(params[:departure_id]).title,
+          departured_at:      route.departured_at,
+          arrival_station:    City.find(params[:arrival_id]).title,
+          arrived_at:         route.arrived_at
       }
     end
+
     slim :index
   end
 
   get '/cities.json' do
-    content_type :json
     @cities = City.all
-    @cities.map { |c| { label: c.title, value: c.id } }.to_json
+
+    jbuilder :cities
   end
 end

@@ -1,14 +1,18 @@
 html
   head
     title Trainify
+
     script src="https://code.jquery.com/jquery-1.12.4.js"
     script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+
     link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+
     link rel="stylesheet" href="/stylesheets/styles.css"
     link rel="stylesheet" href="/stylesheets/dashboard.css"
     link rel="stylesheet" href="/stylesheets/table.css"
+    link rel="stylesheet" href="/stylesheets/booking.css"
   body
-    .footer
-      p trainify
+    .header
+      a href="/" trainify
     .container
       == yield

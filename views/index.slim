@@ -16,16 +16,19 @@
         th Departure time
         th Arrival station
         th Arrival time
+        th
     tbody
-      - if @routes && !@routes.empty?
+      - if @routes && @routes.any?
         - @routes.each do |route|
           tr
-            td=route[:departure_station]
-            td=route[:departure_datetime]
-            td=route[:arrival_station]
-            td=route[:arrival_datetime]
+            td = route[:departure_station]
+            td = route[:departured_at]
+            td = route[:arrival_station]
+            td = route[:arrived_at]
+            td
+              a href="/booking/#{route[:route_id]}" Buy tickets!
       - else
         tr
-          td.empty-table colspan='4' Nothing to show
+          td.empty-table colspan='5' Nothing to show
 
 script src='/js/dashboard.js'

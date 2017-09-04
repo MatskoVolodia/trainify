@@ -1,6 +1,7 @@
 *.gem
 *.rbc
 *.sqlite3
+*.css
 /.config
 /coverage/
 /InstalledFiles
@@ -11,8 +12,6 @@
 /test/version_tmp/
 /tmp/
 .idea/
-Gemfile.lock
-*.css
 .sass-cache/
 
 # Used by dotenv library to load environment variables.
