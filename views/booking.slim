@@ -1,0 +1,22 @@
+.summary
+  .dep-summary
+    p =@department.title
+  .arr-summary
+    p =@arrival.title
+
+.booking
+  form action='/booking' method="post"
+    .order-info
+      .card
+        p.card-header First class available tickets:
+        p.tickets-count =@train.first_class_seats_count
+        input type="number" max="5" min="0"
+      .card
+        p.card-header Second class available tickets:
+        p.tickets-count =@train.second_class_seats_count
+        input type="number" max="5" min="0"
+      .card
+        p.card-header Information
+        input name="user_name"
+        input name="user_email" type="email"
+    input type="submit" value="Order"
