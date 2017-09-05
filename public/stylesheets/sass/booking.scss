@@ -22,3 +22,12 @@
     font-weight: 900;
   }
 }
+
+.order-info {
+  display: flex;
+}
+
+.card {
+  flex-grow: 1;
+  padding: 20px;
+}

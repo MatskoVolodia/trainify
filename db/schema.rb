@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170904084712) do
+ActiveRecord::Schema.define(version: 20170905154159) do
 
   create_table "cities", force: :cascade do |t|
     t.string "title"
@@ -21,6 +21,13 @@ ActiveRecord::Schema.define(version: 20170904084712) do
     t.float    "first_class_price"
     t.float    "second_class_price"
     t.datetime "valid_since"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.string  "user_email"
+    t.integer "route",                    null: false
+    t.integer "first_class_seats_count"
+    t.integer "second_class_seats_count"
   end
 
   create_table "routes", force: :cascade do |t|

@@ -3,6 +3,7 @@ City.delete_all
 Route.delete_all
 Config.delete_all
 Train.delete_all
+Order.delete_all
 
 # seed cities
 City.create(title: 'Lviv')
@@ -36,7 +37,7 @@ first_train_id = Train.first.id
                    destination_id:      first_city_id + j,
                    departured_at:       date,
                    arrived_at:          date + 1,
-                   price_coefficient:   rand + 1,
+                   price_coefficient:   (rand + 1).round(2),
                    train_id:            first_train_id + day_step - 1)
     end
   end

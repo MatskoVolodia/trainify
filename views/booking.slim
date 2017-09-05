@@ -1,22 +1,24 @@
 .summary
   .dep-summary
-    p =@department.title
+    p = @department.title
   .arr-summary
-    p =@arrival.title
+    p = @arrival.title
 
 .booking
-  form action='/booking' method="post"
+  form action="/booking" method="post"
     .order-info
       .card
         p.card-header First class available tickets:
-        p.tickets-count =@train.first_class_seats_count
-        input type="number" max="5" min="0"
+        p.tickets-count =@first_class_available_seats
+        input type="number" max="5" min="0" name="first_class"
+        p = "₴#{@first_class_price} each."
       .card
         p.card-header Second class available tickets:
-        p.tickets-count =@train.second_class_seats_count
-        input type="number" max="5" min="0"
+        p.tickets-count =@second_class_available_seats
+        input type="number" max="5" min="0" name="second_class"
+        p = "₴#{@second_class_price} each."
       .card
-        p.card-header Information
-        input name="user_name"
+        p.card-header Your email:
         input name="user_email" type="email"
+        input hidden="true" name="route_id" value=@route.id
     input type="submit" value="Order"
