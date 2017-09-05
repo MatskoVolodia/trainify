@@ -12,6 +12,7 @@ gem 'sass'
 gem 'tilt-jbuilder', '>= 0.4.0', :require => 'sinatra/jbuilder'
 gem 'hashie'
 gem 'sprockets'
+gem 'actionview'
 
 group :development do
   gem 'shotgun'
