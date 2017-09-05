@@ -15,14 +15,8 @@ class App < Sinatra::Base
   end
 
   get '/search/departure_id=:departure_id&arrival_id=:arrival_id?' do
-    @routes = Route.where({ start_id: params[:departure_id], destination_id: params[:arrival_id]}).map do |route|
-      {
-          route_id:           route.id,
-          departure_station:  City.find(params[:departure_id]).title,
-          departured_at:      route.departured_at,
-          arrival_station:    City.find(params[:arrival_id]).title,
-          arrived_at:         route.arrived_at
-      }
+    @routes = RouteHandler::get_routes(params).map do |route|
+      RouteHandler::build_route_view_object(route, params)
     end
 
     slim :index
