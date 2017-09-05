@@ -1,13 +1,34 @@
-table
-  thead
-    th From
-    th Departure time
-    th To
-    th Arrival time
-  tbody
-  - @routes.each do |route|
-    tr
-      td =route[:from]
-      td =route[:departure_datetime]
-      td =route[:to]
-      td =route[:arrival_datetime]
+.search-form-wrapper
+  form action='/' method='post'
+    label From:
+    input#start
+    input#start-id type="hidden" name='departure_id'
+    label To:
+    input#destination
+    input#destination-id type="hidden" name='arrival_id'
+    input type='submit' value='Search'
+
+.table-wrapper
+  table
+    thead
+      tr
+        th Departure station
+        th Departure time
+        th Arrival station
+        th Arrival time
+        th
+    tbody
+      - if @routes && @routes.any?
+        - @routes.each do |route|
+          tr
+            td = route[:departure_station]
+            td = route[:departured_at]
+            td = route[:arrival_station]
+            td = route[:arrived_at]
+            td
+              a href="/booking/#{route[:route_id]}" Buy tickets!
+      - else
+        tr
+          td.empty-table colspan='5' Nothing to show
+
+script#dashboard-script src='/js/dashboard.js' data-url=GET_CITIES_JSON_URL

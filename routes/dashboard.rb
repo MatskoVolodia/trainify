@@ -1,15 +1,32 @@
-class App < Sinatra::Base 
+class App < Sinatra::Base
+  GET_CITIES_JSON_URL = '/cities.json'
+
   get '/' do
     @cities = City.all
-    
-    @routes = Route.all.map do |route|
-      {
-        from: @cities.find { |c| c.id == route.start_id }.title,
-        departure_datetime: route.departure_datetime,
-        to: @cities.find { |c| c.id == route.destination_id }.title,
-        arrival_datetime: route.arrival_datetime,
-      }
-    end
+
     slim :index
+  end
+
+  post '/' do
+    if Validation::dashboard_params_invalid?(params)
+      redirect '/'
+    else
+      query = Query::build_query(request.params)
+      redirect "/search/#{query}"
+    end
+  end
+
+  get '/search/departure_id=:departure_id&arrival_id=:arrival_id?' do
+    @routes = RouteHandler::get_routes(params).map do |route|
+      RouteHandler::build_route_view_object(route, params)
+    end
+
+    slim :index
+  end
+
+  get GET_CITIES_JSON_URL do
+    @cities = City.all
+
+    jbuilder :cities
   end
 end

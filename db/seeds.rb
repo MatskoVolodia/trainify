@@ -2,6 +2,7 @@
 City.delete_all
 Route.delete_all
 Config.delete_all
+Train.delete_all
 
 # seed cities
 City.create(title: 'Lviv')
@@ -15,17 +16,31 @@ City.create(title: 'Dnipro')
 
 first_city_id = City.first.id
 
-# seed route
-Route.create(start_id: first_city_id + 1, destination_id: first_city_id + 2, departure_datetime: "2017-10-10 10:00:00", arrival_datetime: "2017-10-10 15:00:00", price_coefficient: 1.5)
-Route.create(start_id: first_city_id + 2, destination_id: first_city_id + 1, departure_datetime: "2017-10-10 10:00:00", arrival_datetime: "2017-10-10 15:00:00", price_coefficient: 2)
-Route.create(start_id: first_city_id + 1, destination_id: first_city_id + 3, departure_datetime: "2017-10-12 10:00:00", arrival_datetime: "2017-10-12 15:00:00", price_coefficient: 1.5)
-Route.create(start_id: first_city_id + 1, destination_id: first_city_id + 4, departure_datetime: "2017-10-12 10:00:00", arrival_datetime: "2017-10-12 15:00:00", price_coefficient: 3)
-Route.create(start_id: first_city_id + 4, destination_id: first_city_id + 2, departure_datetime: "2017-10-15 10:00:00", arrival_datetime: "2017-10-15 15:00:00", price_coefficient: 1.1)
-Route.create(start_id: first_city_id + 3, destination_id: first_city_id + 2, departure_datetime: "2017-10-15 10:00:00", arrival_datetime: "2017-10-15 15:00:00", price_coefficient: 1.3)
-Route.create(start_id: first_city_id + 4, destination_id: first_city_id + 5, departure_datetime: "2017-10-17 10:00:00", arrival_datetime: "2017-10-17 15:00:00", price_coefficient: 2.5)
-Route.create(start_id: first_city_id + 5, destination_id: first_city_id + 7, departure_datetime: "2017-10-17 10:00:00", arrival_datetime: "2017-10-17 15:00:00", price_coefficient: 2)
-Route.create(start_id: first_city_id + 7, destination_id: first_city_id + 3, departure_datetime: "2017-10-20 10:00:00", arrival_datetime: "2017-10-20 15:00:00", price_coefficient: 1)
-Route.create(start_id: first_city_id + 7, destination_id: first_city_id + 2, departure_datetime: "2017-10-20 10:00:00", arrival_datetime: "2017-10-20 15:00:00", price_coefficient: 1.2)
+# seed trains
+Train.create(serial_number: "A001", first_class_seats_count: 500, second_class_seats_count: 1000)
+Train.create(serial_number: "A002", first_class_seats_count: 100, second_class_seats_count: 100)
+Train.create(serial_number: "A003", first_class_seats_count: 200, second_class_seats_count: 300)
+Train.create(serial_number: "A004", first_class_seats_count: 500, second_class_seats_count: 1000)
+Train.create(serial_number: "A005", first_class_seats_count: 100, second_class_seats_count: 1000)
 
-#seed configs
+first_train_id = Train.first.id
+
+# seed route
+(1..5).each do |day_step|
+  date = DateTime.new(2017, 10, 10 + day_step, 10, 0 ,0);
+  City.count.times do |i|
+    City.count.times do |j|
+      next if i == j
+
+      Route.create(start_id:    first_city_id + i,
+                   destination_id:      first_city_id + j,
+                   departured_at:       date,
+                   arrived_at:          date + 1,
+                   price_coefficient:   rand + 1,
+                   train_id:            first_train_id + day_step - 1)
+    end
+  end
+end
+
+# seed configs
 Config.create(first_class_price: 100, second_class_price: 50, valid_since: '2017-01-01 00:00:00')

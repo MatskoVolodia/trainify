@@ -8,6 +8,10 @@ gem 'sinatra-activerecord'
 gem 'rake'
 gem 'require_all'
 gem 'minitest'
+gem 'sass'
+gem 'tilt-jbuilder', '>= 0.4.0', :require => 'sinatra/jbuilder'
+gem 'hashie'
+gem 'sprockets'
 
 group :development do
   gem 'shotgun'
