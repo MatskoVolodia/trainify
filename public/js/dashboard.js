@@ -1,6 +1,9 @@
 (function(){
+    var url = document.getElementById("dashboard-script")
+        .getAttribute('data-url');
+
     $.ajax({
-        url: '/cities.json',
+        url: url,
         method: 'get',
         success: function(data){
             ["#start", "#destination"].forEach(function(input){

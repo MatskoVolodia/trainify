@@ -1,4 +1,6 @@
 class App < Sinatra::Base
+  GET_CITIES_JSON_URL = '/cities.json'
+
   get '/' do
     @cities = City.all
 
@@ -22,7 +24,7 @@ class App < Sinatra::Base
     slim :index
   end
 
-  get '/cities.json' do
+  get GET_CITIES_JSON_URL do
     @cities = City.all
 
     jbuilder :cities
