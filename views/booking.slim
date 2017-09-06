@@ -10,15 +10,19 @@
       .card
         p.card-header First class available tickets:
         p.tickets-count =@first_class_available_seats
-        input type="number" max="5" min="0" name="first_class"
+        input#first-class type="number" max="5" min="0" name="first_class" data-price=@first_class_price
         p = "₴#{@first_class_price} each."
       .card
         p.card-header Second class available tickets:
         p.tickets-count =@second_class_available_seats
-        input type="number" max="5" min="0" name="second_class"
+        input#second-class type="number" max="5" min="0" name="second_class" data-price=@second_class_price
         p = "₴#{@second_class_price} each."
       .card
         p.card-header Your email:
         input name="user_email" type="email"
         input hidden="true" name="route_id" value=@route.id
     input type="submit" value="Order"
+    p Total:
+    p#total-price 0
+
+== javascript_include_tag "booking"
