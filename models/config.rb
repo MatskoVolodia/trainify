@@ -1,2 +1,1 @@
-class Config < ActiveRecord::Base
-end
+class Config < ActiveRecord::Base; end

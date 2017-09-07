@@ -1,2 +1,1 @@
-class Route < ActiveRecord::Base
-end
+class Route < ActiveRecord::Base; end

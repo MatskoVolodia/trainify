@@ -1,3 +1,1 @@
-class Train < ActiveRecord::Base
-
-end
+class Train < ActiveRecord::Base; end

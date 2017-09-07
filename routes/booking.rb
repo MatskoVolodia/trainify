@@ -7,7 +7,7 @@ class App < Sinatra::Base
 
     @config = Config.first
 
-    booked_seats = OrdersHandler.get_booked_seats(params[:route_id])
+    booked_seats = BookingService::Search.new(params).call
     @first_class_available_seats = @train.first_class_seats_count - booked_seats[0]
     @second_class_available_seats = @train.second_class_seats_count - booked_seats[1]
 
@@ -17,7 +17,7 @@ class App < Sinatra::Base
   end
 
   post '/booking' do
-    OrdersHandler.create_order(params)
+    BookingService::CreateOrder.new(params).call
     redirect '/'
   end
 end
