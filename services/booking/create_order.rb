@@ -1,19 +1,23 @@
 class BookingService
   class CreateOrder < ApplicationService
+    delegate :params_valid?, to: :policy
     def initialize(params)
-      @user_email   = params[:user_email]
-      @route_id     = params[:route_id]
-      @first_class  = params[:first_class]
-      @second_class = params[:second_class]
+      @params = params
     end
 
     def call
-      Order.create(
-        user_email:       @user_email,
-        route:                    @route_id,
-        first_class_seats_count:  @first_class,
-        second_class_seats_count: @second_class
-      )
+      if params_valid?
+        Order.create(
+          user_email:       @params[:user_email],
+          route:                    @params[:route_id],
+          first_class_seats_count:  @params[:first_class] || 0,
+          second_class_seats_count: @params[:second_class] || 0
+        )
+      end
+    end
+
+    def policy
+      @policy ||= BookingPolicy.new(@params)
     end
   end
 end

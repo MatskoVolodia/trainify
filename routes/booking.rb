@@ -1,18 +1,13 @@
 class App < Sinatra::Base
+  delegate  :department_title, :arrival_title, :route_id,
+            :first_class_available_seats, :second_class_available_seats,
+            :first_class_price, :second_class_price,
+            :max_first_class_tickets_count, :max_second_class_tickets_count,
+            to: :@booking
+
   get '/booking/:route_id' do
-    @route = Route.find(params[:route_id])
-    @department = City.find(@route.start_id)
-    @arrival = City.find(@route.destination_id)
-    @train = Train.find(@route.train_id)
+    @booking = BookingPresenter.new(params)
 
-    @config = Config.first
-
-    booked_seats = BookingService::Search.new(params).call
-    @first_class_available_seats = @train.first_class_seats_count - booked_seats[0]
-    @second_class_available_seats = @train.second_class_seats_count - booked_seats[1]
-
-    @first_class_price = @config.first_class_price * @route.price_coefficient
-    @second_class_price = @config.second_class_price * @route.price_coefficient
     slim :booking
   end
 
