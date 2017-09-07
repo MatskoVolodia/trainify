@@ -1,7 +1,7 @@
 *.gem
 *.rbc
 *.sqlite3
-*.css
+Gemfile.lock
 /.config
 /coverage/
 /InstalledFiles
