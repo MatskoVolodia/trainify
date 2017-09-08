@@ -7,11 +7,7 @@ class DashboardService
     end
 
     def call
-      if params_valid?
-        "/search/#{build_query}"
-      else
-        '/'
-      end
+      if params_valid? then "/search/#{build_query}" else '/' end
     end
 
     def policy

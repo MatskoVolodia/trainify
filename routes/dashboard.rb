@@ -1,5 +1,5 @@
 class App < Sinatra::Base
-  GET_CITIES_JSON_URL = '/cities.json'
+  GET_CITIES_JSON_URL = '/cities.json'.freeze
 
   get '/' do
     @cities = City.all
@@ -8,11 +8,11 @@ class App < Sinatra::Base
   end
 
   post '/' do
-    redirect DashboardService::QueryBuilder.new(request.params).call
+    redirect DashboardService::QueryBuilder.call(request.params)
   end
 
   get '/search/departure_id=:departure_id&arrival_id=:arrival_id?' do
-    @routes = DashboardService::Search.new(params).call
+    @routes = DashboardService::Search.call(params)
 
     slim :index
   end

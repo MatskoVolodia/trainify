@@ -2,51 +2,67 @@ class BookingPresenter
   TICKETS_COUNT_LIMIT = 5
 
   attr_reader :first_class_available_seats, :second_class_available_seats,
-              :first_class_price, :second_class_price
+              :first_class_price,           :second_class_price
+  
+  delegate :title,  to: :department,  prefix: true
+  delegate :title,  to: :arrival,     prefix: true
+  delegate :id,     to: :route,       prefix: true
 
   def initialize(params)
-    @params     = params
-    @route      = Route.find_by_id(@params[:route_id])
-    @department = City.find_by_id(@route&.start_id)
-    @arrival    = City.find_by_id(@route&.destination_id)
-    @train      = Train.find_by_id(@route&.train_id)
-    @config     = Config.first
-
-    @first_class_available_seats, @second_class_available_seats = get_available_seats
-    @first_class_price, @second_class_price                     = get_current_prices
+    @params = params
   end
 
-  def department_title
-    @department.title
+  def department
+    @department ||= City.find_by(id: route&.start_id)
   end
 
-  def arrival_title
-    @arrival.title
+  def route
+    @route ||= Route.find_by(id: @params[:route_id])
   end
 
-  def route_id
-    @route.id
+  def arrival 
+    @arrival ||= City.find_by(id: @route&.destination_id)
+  end
+
+  def train
+    @train ||= Train.find_by(id: @route&.train_id)
+  end
+
+  def config
+    @config ||= Config.first
+  end
+
+  def first_class_available_seats
+    @first_class_available_seats ||= get_available_seats[:first_class]
+  end
+
+  def second_class_available_seats
+    @second_class_available_seats ||= get_available_seats[:second_class]
   end
 
   def max_first_class_tickets_count
-    [ @first_class_available_seats, TICKETS_COUNT_LIMIT ].min
+    [first_class_available_seats, TICKETS_COUNT_LIMIT].min
   end
 
   def max_second_class_tickets_count
-    [ @second_class_available_seats, TICKETS_COUNT_LIMIT ].min
+    [second_class_available_seats, TICKETS_COUNT_LIMIT].min
   end
 
   private
 
   def get_available_seats
-    booked_seats = BookingService::Search.new(@params).call
+    booked_seats = BookingService::Search.call(@params)
 
-    [ @train.first_class_seats_count - booked_seats[0],
-      @train.second_class_seats_count - booked_seats[1] ]
+    {
+      first_class:  train.first_class_seats_count - booked_seats[:first_class],
+      second_class: train.second_class_seats_count - booked_seats[:second_class]
+    }
   end
 
   def get_current_prices
-    [ @config&.first_class_price * @route&.price_coefficient,
-      @config&.second_class_price * @route&.price_coefficient ]
+    {
+      first_class:    config&.first_class_price * route&.price_coefficient,
+      second_class:   config&.second_class_price * route&.price_coefficient
+    }
   end
 end

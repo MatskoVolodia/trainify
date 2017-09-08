@@ -1,26 +1,26 @@
 .summary
   .dep-summary
-    p = department_title
+    p = @booking.department_title
   .arr-summary
-    p = arrival_title
+    p = @booking.arrival_title
 
 .booking
   form action="/booking" method="post"
     .order-info
       .card
         p.card-header First class available tickets:
-        p.tickets-count = first_class_available_seats
-        input#first-class type="number" max=max_first_class_tickets_count min="0" name="first_class" data-price=first_class_price
-        p = "₴#{ first_class_price } each."
+        p.tickets-count = @booking.first_class_available_seats
+        input#first-class type="number" max=@booking.max_first_class_tickets_count min="0" name="first_class" data-price=@booking.first_class_price
+        p = "₴#{ @booking.first_class_price } each."
       .card
         p.card-header Second class available tickets:
-        p.tickets-count = second_class_available_seats
-        input#second-class type="number" max=max_second_class_tickets_count min="0" name="second_class" data-price=second_class_price
-        p = "₴#{ second_class_price } each."
+        p.tickets-count = @booking.second_class_available_seats
+        input#second-class type="number" max=@booking.max_second_class_tickets_count min="0" name="second_class" data-price=@booking.second_class_price
+        p = "₴#{ @booking.second_class_price } each."
       .card
         p.card-header Your email:
         input name="user_email" type="email"
-        input hidden="true" name="route_id" value=route_id
+        input hidden="true" name="route_id" value=@booking.route_id
     input type="submit" value="Order"
     p Total:
     p#total-price 0

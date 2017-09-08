@@ -1,7 +1,6 @@
 *.gem
 *.rbc
 *.sqlite3
-Gemfile.lock
 /.config
 /coverage/
 /InstalledFiles
