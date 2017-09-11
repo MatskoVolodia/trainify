@@ -9,6 +9,20 @@ class DashboardService
       routes.map { |route| present(route) }
     end
 
+    private
+
+    attr_reader :departure_id, :arrival_id
+
+    def present(route)
+      {
+        route_id:           route.id,
+        departure_station:  departure_station&.title,
+        departured_at:      route.departured_at,
+        arrival_station:    arrival_station&.title,
+        arrived_at:         route.arrived_at
+      }
+    end
+
     def routes
       @routes ||= Route.where(
         start_id:       departure_id,
@@ -22,20 +36,6 @@ class DashboardService
 
     def arrival_station
       @arrival_station ||= City.find_by(id: arrival_id)
-    end
-
-    private
-
-    attr_reader :departure_id, :arrival_id
-
-    def present(route)
-      {
-        route_id:           route.id,
-        departure_station:  departure_station&.title,
-        departured_at:      route.departured_at,
-        arrival_station:    arrival_station&.title,
-        arrived_at:         route.arrived_at
-      }
     end
   end
 end

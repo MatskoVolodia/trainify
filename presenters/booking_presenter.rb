@@ -5,6 +5,9 @@ class BookingPresenter
   delegate :title,  to: :arrival,     prefix: true
   delegate :id,     to: :route,       prefix: true
 
+  delegate :first_class_price,  to: :config
+  delegate :second_class_price, to: :config
+
   def initialize(params)
     @params = params
   end
@@ -45,20 +48,12 @@ class BookingPresenter
     [second_class_available_seats, TICKETS_COUNT_LIMIT].min
   end
 
-  def first_class_price
-    @first_class_price ||= config.first_class_price
-  end
-
-  def second_class_price
-    @second_class_price ||= config.second_class_price
-  end
-
   private
 
   attr_reader :params
 
   def get_available_seats
-    booked_seats = BookingService::Search.call(@params)
+    booked_seats = BookingService::Search.call(params)
 
     {
       first_class:  train.first_class_seats_count - booked_seats[:first_class],
@@ -68,8 +63,8 @@ class BookingPresenter
 
   def get_current_prices
     {
-      first_class:    config&.first_class_price * route&.price_coefficient,
-      second_class:   config&.second_class_price * route&.price_coefficient
+      first_class:    config&.first_class_price.to_f * route&.price_coefficient.to_f,
+      second_class:   config&.second_class_price.to_f * route&.price_coefficient.to_f
     }
   end
 end

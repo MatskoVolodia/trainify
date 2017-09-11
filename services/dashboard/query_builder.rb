@@ -10,16 +10,16 @@ class DashboardService
       params_valid? ? "/search/#{build_query}" : '/'
     end
 
-    def policy
-      @policy ||= DashboardPolicy.new(params)
-    end
-
     private
 
     attr_reader :params
 
     def build_query
-      @params.map { |key, value| "#{key}=#{value}" } .join('&')
+      params.map { |key, value| "#{key}=#{value}" } .join('&')
+    end
+
+    def policy
+      @policy ||= DashboardPolicy.new(params)
     end
   end
 end

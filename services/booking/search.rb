@@ -5,22 +5,18 @@ class BookingService
     end
 
     def call
-      booked_seats
-    end
-
-    def orders
-      @orders ||= Order.where(route: route_id)
+      {
+        first_class:  orders.map(&:first_class_seats_count).sum,
+        second_class: orders.map(&:second_class_seats_count).sum
+      }
     end
 
     private
 
     attr_reader :route_id
 
-    def booked_seats
-      {
-        first_class:  orders.map(&:first_class_seats_count).sum,
-        second_class: orders.map(&:second_class_seats_count).sum
-      }
+    def orders
+      @orders ||= Order.where(route: route_id)
     end
   end
 end

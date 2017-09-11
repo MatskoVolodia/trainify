@@ -5,7 +5,7 @@ class DashboardPolicy
   end
 
   def params_valid?
-    !(departure_id.blank? || arrival_id.blank?)
+    departure_id.present? && arrival_id.present?
   end
 
   private
