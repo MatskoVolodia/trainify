@@ -11,9 +11,17 @@ class DashboardService
 
     def routes
       @routes ||= Route.where(
-          start_id:       departure_id,
-          destination_id: arrival_id
+        start_id:       departure_id,
+        destination_id: arrival_id
       )
+    end
+
+    def departure_station
+      @departure_station ||= City.find_by(id: departure_id)
+    end
+
+    def arrival_station
+      @arrival_station ||= City.find_by(id: arrival_id)
     end
 
     private
@@ -23,9 +31,9 @@ class DashboardService
     def present(route)
       {
         route_id:           route.id,
-        departure_station:  City.find_by_id(@departure_id)&.title,
+        departure_station:  departure_station&.title,
         departured_at:      route.departured_at,
-        arrival_station:    City.find_by_id(@arrival_id)&.title,
+        arrival_station:    arrival_station&.title,
         arrived_at:         route.arrived_at
       }
     end

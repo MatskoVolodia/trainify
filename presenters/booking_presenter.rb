@@ -14,15 +14,15 @@ class BookingPresenter
   end
 
   def route
-    @route ||= Route.find_by(id: @params[:route_id])
+    @route ||= Route.find_by(id: params[:route_id])
   end
 
   def arrival 
-    @arrival ||= City.find_by(id: @route&.destination_id)
+    @arrival ||= City.find_by(id: route&.destination_id)
   end
 
   def train
-    @train ||= Train.find_by(id: @route&.train_id)
+    @train ||= Train.find_by(id: route&.train_id)
   end
 
   def config
@@ -54,6 +54,8 @@ class BookingPresenter
   end
 
   private
+
+  attr_reader :params
 
   def get_available_seats
     booked_seats = BookingService::Search.call(@params)
