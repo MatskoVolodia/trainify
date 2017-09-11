@@ -1,9 +1,6 @@
 class BookingPresenter
   TICKETS_COUNT_LIMIT = 5
 
-  attr_reader :first_class_available_seats, :second_class_available_seats,
-              :first_class_price,           :second_class_price
-  
   delegate :title,  to: :department,  prefix: true
   delegate :title,  to: :arrival,     prefix: true
   delegate :id,     to: :route,       prefix: true
@@ -46,6 +43,14 @@ class BookingPresenter
 
   def max_second_class_tickets_count
     [second_class_available_seats, TICKETS_COUNT_LIMIT].min
+  end
+
+  def first_class_price
+    @first_class_price ||= config.first_class_price
+  end
+
+  def second_class_price
+    @second_class_price ||= config.second_class_price
   end
 
   private
