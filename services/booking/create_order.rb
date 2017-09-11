@@ -7,18 +7,28 @@ class BookingService
     end
 
     def call
-      if params_valid?
-        Order.create(
-          user_email:               @params[:user_email],
-          route:                    @params[:route_id],
-          first_class_seats_count:  @params[:first_class] || 0,
-          second_class_seats_count: @params[:second_class] || 0
-        )
-      end
+      create_order if params_valid?
     end
 
     def policy
-      @policy ||= BookingPolicy.new(@params)
+      @policy ||= BookingPolicy.new(params)
+    end
+
+    def create_order
+      Order.create(
+        user_email:                 params[:user_email],
+        route:                      params[:route_id],
+        first_class_seats_count:    valid_count(params[:first_class]),
+        second_class_seats_count:   valid_count(params[:second_class])
+      )
+    end
+
+    private
+
+    attr_reader :params
+
+    def valid_count(count)
+      count.blank? ? 0 : count
     end
   end
 end

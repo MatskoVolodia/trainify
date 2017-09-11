@@ -6,15 +6,19 @@ class DashboardService
     end
 
     def call
-      found_routes = Route.where(
-        start_id:       @departure_id,
-        destination_id: @arrival_id
-      )
+      routes.map { |route| present(route) }
+    end
 
-      routes = found_routes.map { |route| present(route) }
+    def routes
+      @routes ||= Route.where(
+          start_id:       departure_id,
+          destination_id: arrival_id
+      )
     end
 
     private
+
+    attr_reader :departure_id, :arrival_id
 
     def present(route)
       {

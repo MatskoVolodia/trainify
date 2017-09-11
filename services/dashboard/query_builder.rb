@@ -7,14 +7,16 @@ class DashboardService
     end
 
     def call
-      if params_valid? then "/search/#{build_query}" else '/' end
+      params_valid? ? "/search/#{build_query}" : '/'
     end
 
     def policy
-      @policy ||= DashboardPolicy.new(@params)
+      @policy ||= DashboardPolicy.new(params)
     end
 
     private
+
+    attr_reader :params
 
     def build_query
       @params.map { |key, value| "#{key}=#{value}" } .join('&')
