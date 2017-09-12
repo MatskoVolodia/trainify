@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170905154159) do
+ActiveRecord::Schema.define(version: 20170912134024) do
 
   create_table "cities", force: :cascade do |t|
     t.string "title"
@@ -43,6 +43,11 @@ ActiveRecord::Schema.define(version: 20170905154159) do
     t.string  "serial_number"
     t.integer "first_class_seats_count"
     t.integer "second_class_seats_count"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email"
+    t.string "password_digest"
   end
 
 end

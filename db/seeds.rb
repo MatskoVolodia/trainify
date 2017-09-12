@@ -50,3 +50,6 @@ Config.create(
 def random_seats_count
   [100, 200, 300, 500, 1000].sample
 end
+
+# seed users
+User.create(email: 'admin@gmail.com', password: 'admin')

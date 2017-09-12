@@ -15,6 +15,9 @@ gem 'thin'
 gem 'tilt-jbuilder', '>= 0.4.0', require: 'sinatra/jbuilder'
 gem 'uglifier'
 gem 'faker'
+gem 'bcrypt'
+gem 'warden'
+gem 'data_mapper'
 
 group :development do
   gem 'pry'
