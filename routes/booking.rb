@@ -7,6 +7,7 @@ class App < Sinatra::Base
 
   post '/booking' do
     BookingService::CreateOrder.call(params)
+    
     redirect '/'
   end
 end

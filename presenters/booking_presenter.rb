@@ -13,12 +13,16 @@ class BookingPresenter
     @params = params
   end
 
-  def department
-    @department ||= City.find_by(id: route&.start_id)
-  end
-
   def route
     @route ||= Route.find_by(id: params[:route_id])
+  end
+
+  def config
+    @config ||= Config.first
+  end
+  
+  def department
+    @department ||= City.find_by(id: route&.start_id)
   end
 
   def arrival 
@@ -27,10 +31,6 @@ class BookingPresenter
 
   def train
     @train ||= Train.find_by(id: route&.train_id)
-  end
-
-  def config
-    @config ||= Config.first
   end
 
   def first_class_available_seats
@@ -51,9 +51,9 @@ class BookingPresenter
 
   def current_prices
     BookingService::CurrentPrices.call(
-      first_class_price: first_class_price,
+      first_class_price:  first_class_price,
       second_class_price: second_class_price,
-      price_coefficient: price_coefficient
+      price_coefficient:  price_coefficient
     )
   end
 
@@ -62,12 +62,14 @@ class BookingPresenter
   attr_reader :params
 
   def available_seats
-    booked_seats = BookingService::Search.call(params)
-
-    BookingService::AvailableTickets.call(
-      first_class_seats_count: train.first_class_seats_count,
+    @available_seats ||= BookingService::AvailableTickets.call(
+      first_class_seats_count:  train.first_class_seats_count,
       second_class_seats_count: train.second_class_seats_count,
-      booked_seats: booked_seats
+      booked_seats:             booked_seats
     )
+  end
+
+  def booked_seats
+    @booked_seats ||= BookingService::Search.call(params)
   end
 end

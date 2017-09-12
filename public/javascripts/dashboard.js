@@ -1,5 +1,6 @@
 (function(){
-  var url = document.getElementById("dashboard-script")
+  var url = document
+      .getElementById("dashboard-script")
       .getAttribute('data-url');
 
   $.ajax({

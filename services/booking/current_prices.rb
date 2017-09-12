@@ -8,8 +8,8 @@ class BookingService
 
     def call
       {
-        first_class:  first_class_current_price,
-        second_class: second_class_current_price
+        first_class:  current_price(first_class_price),
+        second_class: current_price(second_class_price)
       }
     end
 
@@ -17,12 +17,8 @@ class BookingService
 
     attr_reader :first_class_price, :second_class_price, :price_coefficient
 
-    def first_class_current_price
-      first_class_price * price_coefficient
-    end
-
-    def second_class_current_price
-      second_class_price * price_coefficient
+    def current_price(price)
+      price * price_coefficient
     end
   end
 end

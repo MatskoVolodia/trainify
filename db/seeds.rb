@@ -6,23 +6,18 @@ Train.delete_all
 Order.delete_all
 
 # seed cities
-City.create(title: 'Lviv')
-City.create(title: 'Kyiv')
-City.create(title: 'Ternopil')
-City.create(title: 'Lutsk')
-City.create(title: 'Kharkiv')
-City.create(title: 'Odesa')
-City.create(title: 'Uzhorod')
-City.create(title: 'Dnipro')
+8.times { City.create(title: Faker::GameOfThrones.city) }
 
 first_city_id = City.first.id
 
 # seed trains
-Train.create(serial_number: 'A001', first_class_seats_count: 500, second_class_seats_count: 1000)
-Train.create(serial_number: 'A002', first_class_seats_count: 100, second_class_seats_count: 100)
-Train.create(serial_number: 'A003', first_class_seats_count: 200, second_class_seats_count: 300)
-Train.create(serial_number: 'A004', first_class_seats_count: 500, second_class_seats_count: 1000)
-Train.create(serial_number: 'A005', first_class_seats_count: 100, second_class_seats_count: 1000)
+5.times do |i|
+  Train.create(
+    serial_number:            Faker::Vehicle.vin, 
+    first_class_seats_count:  random_seats_count,
+    second_class_seats_count: random_seats_count
+  )
+end
 
 first_train_id = Train.first.id
 
@@ -47,7 +42,11 @@ end
 
 # seed configs
 Config.create(
-  first_class_price:    100,
-  second_class_price:   50,
-  valid_since:          '2017-01-01 00:00:00'
+  first_class_price:  100,
+  second_class_price: 50,
+  valid_since:        '2017-01-01 00:00:00'
 )
+
+def random_seats_count
+  [100, 200, 300, 500, 1000].sample
+end

@@ -20,9 +20,9 @@ class BookingService
 
     def create_order
       Order.create(
-        user_email: params[:user_email],
-        route: params[:route_id],
-        first_class_seats_count: params[:first_class].to_i,
+        user_email:               params[:user_email],
+        route:                    params[:route_id],
+        first_class_seats_count:  params[:first_class].to_i,
         second_class_seats_count: params[:second_class].to_i
       )
     end
