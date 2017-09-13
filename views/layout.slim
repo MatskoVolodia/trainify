@@ -12,6 +12,7 @@ html
     == stylesheet_link_tag "/stylesheets/booking.css"
   body
     .header
-      a href="/" trainify
+      a href='/' trainify
+      == auth_link
     .container
       == yield
