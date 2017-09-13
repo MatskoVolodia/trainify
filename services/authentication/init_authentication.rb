@@ -23,14 +23,16 @@ class AuthenticationService
         end
 
         def authenticate!
-          user = User.find_by(email: params['user']['email'])
-
           authenticated = AuthenticationService::Authenticate.call(
             email: params['user']['email'],
             password: params['user']['password']
           )
 
           success!(user) if authenticated
+        end
+
+        def user
+          @user ||= User.find_by(email: params['user']['email'])
         end
       end
     end
