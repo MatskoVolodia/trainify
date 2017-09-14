@@ -1,0 +1,36 @@
+body, html {
+  width: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background: #335;
+  color: white;
+  display: flex;
+  justify-content: center;
+
+  a {
+    font-size: 30px;
+    font-style: italic;
+    font-weight: 600;
+    text-transform: capitalize;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+    padding: 10px 0;
+  }
+
+  a:hover {
+    transform: scale(1.05);
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}

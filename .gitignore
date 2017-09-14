@@ -1,5 +1,6 @@
 *.gem
 *.rbc
+*.sqlite3
 /.config
 /coverage/
 /InstalledFiles
@@ -9,6 +10,8 @@
 /test/tmp/
 /test/version_tmp/
 /tmp/
+.idea/
+.sass-cache/
 
 # Used by dotenv library to load environment variables.
 # .env

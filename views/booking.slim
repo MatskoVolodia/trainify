@@ -1,0 +1,28 @@
+.summary
+  .dep-summary
+    p = @booking.department_title
+  .arr-summary
+    p = @booking.arrival_title
+
+.booking
+  form action="/booking" method="post"
+    .order-info
+      .card
+        p.card-header First class available tickets:
+        p.tickets-count = @booking.first_class_available_seats
+        input#first-class type="number" max=@booking.max_first_class_tickets_count min="0" name="first_class" data-price=@booking.current_prices[:first_class]
+        p = "₴#{ @booking.current_prices[:first_class] } each."
+      .card
+        p.card-header Second class available tickets:
+        p.tickets-count = @booking.second_class_available_seats
+        input#second-class type="number" max=@booking.max_second_class_tickets_count min="0" name="second_class" data-price=@booking.current_prices[:second_class]
+        p = "₴#{ @booking.current_prices[:second_class] } each."
+      .card
+        p.card-header Your email:
+        input name="user_email" type="email"
+        input hidden="true" name="route_id" value=@booking.route_id
+    input type="submit" value="Order"
+    p Total:
+    p#total-price 0
+
+== javascript_include_tag "booking"
