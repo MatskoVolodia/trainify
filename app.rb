@@ -10,7 +10,7 @@ class App < Sinatra::Base
   register Sinatra::ActiveRecordExtension
 
   get '/' do
-    @cities = City.all
+    p 'Hello conflict 2'
     slim :index
   end
 end
