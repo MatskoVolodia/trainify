@@ -11,7 +11,6 @@ class App < Sinatra::Base
 
   get '/' do
     p 'Hello conflict 2'
-
     slim :index
   end
 end
