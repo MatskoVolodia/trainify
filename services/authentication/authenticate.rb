@@ -18,7 +18,7 @@ class AuthenticationService
     end
 
     def user_password
-      BCrypt::Password.new(user.password_digest)
+      user ? BCrypt::Password.new(user.password_digest) : nil
     end
   end
 end

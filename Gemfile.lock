@@ -72,12 +72,9 @@ GEM
     erubis (2.7.0)
     eventmachine (1.2.5)
     execjs (2.7.0)
-<<<<<<< HEAD
     faker (1.8.4)
       i18n (~> 0.5)
-=======
     fastercsv (1.5.5)
->>>>>>> Basic login functionality provided. Needs refactoring
     ffi (1.9.18)
     hashie (3.5.6)
     i18n (0.8.6)
@@ -179,12 +176,9 @@ PLATFORMS
 DEPENDENCIES
   actionview
   activerecord (= 4.2.5)
-<<<<<<< HEAD
-  faker
-=======
   bcrypt
   data_mapper
->>>>>>> Basic login functionality provided. Needs refactoring
+  faker
   hashie
   minitest
   pry

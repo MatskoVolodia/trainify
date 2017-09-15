@@ -12,7 +12,7 @@ class App < Sinatra::Base
   end
 
   get '/auth/logout' do
-    AuthenticationService::Logout.call
+    AuthenticationService::Logout.call(env)
 
     redirect '/'
   end

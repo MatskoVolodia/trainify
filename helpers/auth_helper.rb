@@ -1,7 +1,5 @@
 module AuthHelper
   def auth_link
-    @authorized = AuthenticationService::CurrentUser.call(env)
-
     link_to title, url
   end
 
@@ -13,5 +11,7 @@ module AuthHelper
     authorized ? 'Profile' : 'Login'
   end
 
-  attr_reader :authorized
+  def authorized
+    @authorized ||= AuthenticationService::CurrentUser.call(env)
+  end
 end
