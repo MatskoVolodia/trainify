@@ -2,8 +2,9 @@ class BookingService
   class CreateOrder < ApplicationService
     delegate :params_valid?, to: :policy
 
-    def initialize(params)
-      @params = params
+    def initialize(args)
+      @params = args[:params]
+      @env    = args[:env]
     end
 
     def call
@@ -12,7 +13,7 @@ class BookingService
 
     private
 
-    attr_reader :params
+    attr_reader :params, :env
 
     def policy
       @policy ||= BookingPolicy.new(params)
@@ -20,11 +21,15 @@ class BookingService
 
     def create_order
       Order.create(
-        user_email:               params[:user_email],
+        user_email:               email,
         route:                    params[:route_id],
         first_class_seats_count:  params[:first_class].to_i,
         second_class_seats_count: params[:second_class].to_i
       )
+    end
+
+    def email
+      @email ||= AuthenticationService::CurrentUser.call(env).email
     end
   end
 end
