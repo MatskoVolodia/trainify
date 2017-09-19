@@ -1,8 +1,8 @@
 class AuthenticationService
   class Authenticate < ApplicationService
     def initialize(params)
-      @email                = params[:email]
-      @attempted_password   = params[:password]
+      @email              = params[:email]
+      @attempted_password = params[:password]
     end
 
     def call
@@ -18,7 +18,7 @@ class AuthenticationService
     end
 
     def user_password
-      user ? BCrypt::Password.new(user.password_digest) : nil
+      BCrypt::Password.new(user.password_digest) if user
     end
   end
 end

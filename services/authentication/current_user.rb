@@ -5,7 +5,7 @@ class AuthenticationService
     end
 
     def call
-      env['warden'].user
+      @user ||= env['warden'].user
     end
 
     private

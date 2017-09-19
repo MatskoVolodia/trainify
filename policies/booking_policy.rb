@@ -1,7 +1,7 @@
 class BookingPolicy
   def initialize(params)
-    @first_class  = params[:first_class] || 0
-    @second_class = params[:second_class] || 0
+    @first_class  = params[:first_class].to_i
+    @second_class = params[:second_class].to_i
   end
 
   def params_valid?

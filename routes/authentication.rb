@@ -8,7 +8,7 @@ class App < Sinatra::Base
   post '/auth/login' do
     env['warden'].authenticate!
 
-    redirect session[:return_to] || '/'
+    session.fetch(:return_to, '/')
   end
 
   get '/auth/logout' do

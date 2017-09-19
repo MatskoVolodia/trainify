@@ -19,16 +19,16 @@ class AuthenticationService
     def create_strategy
       Warden::Strategies.add(:password) do
         def valid?
-          params['user'] && params['user']['email'] && params['user']['password']
+          params.dig('user', 'email') && params.dig('user', 'password')
         end
 
         def authenticate!
           authenticated = AuthenticationService::Authenticate.call(
-            email: params['user']['email'],
+            email:    params['user']['email'],
             password: params['user']['password']
           )
 
-          success!(user) if authenticated
+          success!(user) if (user and authenticated)
         end
 
         def user

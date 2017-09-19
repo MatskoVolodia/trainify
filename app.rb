@@ -23,12 +23,12 @@ class App < Sinatra::Base
   register Sinatra::ActiveRecordExtension
 
   use Warden::Manager do |config|
-    config.serialize_into_session{ |user| user.id }
-    config.serialize_from_session{ |id| User.find(id) }
+    config.serialize_into_session { |user| user.id }
+    config.serialize_from_session { |id| User.find(id) }
 
     config.scope_defaults :default,
       strategies: [:password],
-      action: UNAUTHENTICATED_URL
+      action:     UNAUTHENTICATED_URL
 
     config.failure_app = self
   end
