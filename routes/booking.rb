@@ -10,7 +10,11 @@ class App < Sinatra::Base
   post '/booking' do
     env['warden'].authenticate!
 
-    BookingService::CreateOrder.call(params: params, env: env)
+    BookingService::CreateOrder.call(
+      params:       params, 
+      env:          env,
+      current_user: current_user
+    )
 
     redirect '/'
   end

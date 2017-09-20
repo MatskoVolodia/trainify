@@ -4,14 +4,10 @@ module AuthHelper
   end
 
   def url
-    authorized ? '/profile' : '/auth/login'
+    current_user ? '/profile' : '/auth/login'
   end
 
   def title
-    authorized ? 'Profile' : 'Login'
-  end
-
-  def authorized
-    @authorized ||= AuthenticationService::CurrentUser.call(env)
+    current_user ? 'Profile' : 'Login'
   end
 end

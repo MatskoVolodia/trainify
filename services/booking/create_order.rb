@@ -3,8 +3,9 @@ class BookingService
     delegate :params_valid?, to: :policy
 
     def initialize(args)
-      @params = args[:params]
-      @env    = args[:env]
+      @params       = args[:params]
+      @env          = args[:env]
+      @current_user = args[:current_user]
     end
 
     def call
@@ -13,7 +14,7 @@ class BookingService
 
     private
 
-    attr_reader :params, :env
+    attr_reader :params, :env, :current_user
 
     def policy
       @policy ||= BookingPolicy.new(params)
@@ -29,7 +30,7 @@ class BookingService
     end
 
     def email
-      @email ||= AuthenticationService::CurrentUser.call(env)&.email
+      @email ||= current_user&.email
     end
   end
 end
