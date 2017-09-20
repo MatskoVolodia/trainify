@@ -85,13 +85,20 @@ GEM
     json_pure (1.8.6)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
+    mail (2.6.6)
+      mime-types (>= 1.16, < 4)
     method_source (0.8.2)
+    mime-types (3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0521)
     mini_portile2 (2.2.0)
     minitest (5.10.3)
     multi_json (1.12.2)
     mustermann (1.0.1)
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
+    pony (1.11)
+      mail (>= 2.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -183,6 +190,7 @@ DEPENDENCIES
   faker
   hashie
   minitest
+  pony
   pry
   rake
   require_all

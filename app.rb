@@ -6,7 +6,7 @@ require 'sinatra/activerecord'
 require 'sinatra/flash'
 require 'action_view'
 
-%w[policies models routes services presenters helpers].each do |folder_name|
+%w[policies models routes services presenters helpers mailers].each do |folder_name|
   Dir.glob("./#{folder_name}/*.rb") { |f| require f }
   Dir.glob("./#{folder_name}/**/*.rb") { |f| require f }
 end

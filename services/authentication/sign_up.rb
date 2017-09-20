@@ -8,6 +8,7 @@ class AuthenticationService
       if UserPolicy.new(params).user_info_valid?
         if email_available?
           User.create(email: params[:email], password: params[:password])
+          RegistrationMailer.new(email: params[:email]).send
           :success
         else
           :email_unavailable
