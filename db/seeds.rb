@@ -52,4 +52,4 @@ Config.create(
 )
 
 # seed users
-User.create(email: 'admin@gmail.com', password: 'admin')
+User.create(email: 'admin@gmail.com', password: 'admin123')

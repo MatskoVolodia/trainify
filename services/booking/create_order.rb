@@ -29,7 +29,7 @@ class BookingService
     end
 
     def email
-      @email ||= AuthenticationService::CurrentUser.call(env).email
+      @email ||= AuthenticationService::CurrentUser.call(env)&.email
     end
   end
 end
