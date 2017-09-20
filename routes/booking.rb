@@ -11,7 +11,7 @@ class App < Sinatra::Base
     env['warden'].authenticate!
 
     BookingService::CreateOrder.call(
-      params:       params, 
+      params:       params,
       env:          env,
       current_user: current_user
     )

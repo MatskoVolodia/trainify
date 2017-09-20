@@ -28,7 +28,7 @@ class AuthenticationService
             password: params['user']['password']
           )
 
-          success!(user) if (user && authenticated)
+          success!(user) if user && authenticated
         end
 
         def user

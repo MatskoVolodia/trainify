@@ -3,6 +3,7 @@ Bundler.require
 
 require 'sinatra'
 require 'sinatra/activerecord'
+require 'sinatra/flash'
 require 'action_view'
 
 %w[policies models routes services presenters helpers].each do |folder_name|
@@ -21,13 +22,14 @@ class App < Sinatra::Base
           AuthHelper
 
   register Sinatra::ActiveRecordExtension
-
+  register Sinatra::Flash
+  
   use Warden::Manager do |config|
     config.serialize_into_session { |user| user.id }
     config.serialize_from_session { |id| User.find(id) }
 
     config.scope_defaults :default,
-      strategies: [:password],
+      strategies: %i[password],
       action:     UNAUTHENTICATED_URL
 
     config.failure_app = self

@@ -15,9 +15,9 @@ Order.delete_all
 first_city_id = City.first.id
 
 # seed trains
-5.times do |i|
+5.times do
   Train.create(
-    serial_number:            Faker::Vehicle.vin, 
+    serial_number:            Faker::Vehicle.vin,
     first_class_seats_count:  random_seats_count,
     second_class_seats_count: random_seats_count
   )
