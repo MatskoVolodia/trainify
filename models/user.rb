@@ -3,4 +3,6 @@ class User < ActiveRecord::Base
 
   validates :password, length: { in: 8..16 }
   validates :email,    uniqueness: true
+
+  has_many :orders
 end
