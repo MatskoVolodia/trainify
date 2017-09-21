@@ -1,4 +1,7 @@
 h3 Login
+
+.notice = flash[:notice]
+
 form action='/auth/login' method='POST'
   p Email
   input type='email' name='user[email]'

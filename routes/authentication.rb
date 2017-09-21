@@ -2,6 +2,7 @@ class App < Sinatra::Base
   UNAUTHENTICATED_URL       = '/auth/unauthenticated'.freeze
   EMAIL_UNAVAILABLE_NOTICE  = 'This email is registered.'.freeze
   INVALID_PARAMETERS_NOTICE = 'Please, fill form properly.'.freeze
+  INVALID_LOGIN_INFO_NOTICE = 'Email or password is incorrect'.freeze
 
   get '/auth/login' do
     slim :login
@@ -40,6 +41,8 @@ class App < Sinatra::Base
 
   post UNAUTHENTICATED_URL do
     session[:return_to] = env['warden.options'][:attempted_path] if session[:return_to].blank?
+
+    flash[:notice] = env['warden.options'][:message]
 
     redirect '/auth/login'
   end

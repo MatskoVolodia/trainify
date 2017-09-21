@@ -28,7 +28,11 @@ class AuthenticationService
             password: params['user']['password']
           )
 
-          success!(user) if user && authenticated
+          if user && authenticated
+            success!(user)
+          else
+            throw(:warden, message: 'Email or password is incorrect.')
+          end
         end
 
         def user
