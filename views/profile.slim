@@ -1,3 +1,15 @@
-p = current_user.email
+.tabs
+  button.tablink#profile-btn Profile
+  button.tablink#orders-btn My Orders
+
+.tab-content#profile-tab
+  p = current_user.email
+
+.tab-content#orders-tab
+  ul
+    - current_user.orders.each do |order|
+      li = order.id
 
 a href='/auth/logout' Logout
+
+== javascript_include_tag 'profile'
