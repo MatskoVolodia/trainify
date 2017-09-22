@@ -25,7 +25,7 @@ class App < Sinatra::Base
   register Sinatra::Flash
   
   use Warden::Manager do |config|
-    config.serialize_into_session { |user| user.id }
+    config.serialize_into_session(&:id)
     config.serialize_from_session { |id| User.find(id) }
 
     config.scope_defaults :default,

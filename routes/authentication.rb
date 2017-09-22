@@ -1,7 +1,5 @@
 class App < Sinatra::Base
   UNAUTHENTICATED_URL       = '/auth/unauthenticated'.freeze
-  EMAIL_UNAVAILABLE_NOTICE  = 'This email is registered.'.freeze
-  INVALID_PARAMETERS_NOTICE = 'Please, fill form properly.'.freeze
   INVALID_LOGIN_INFO_NOTICE = 'Email or password is incorrect'.freeze
 
   get '/auth/login' do
@@ -26,17 +24,10 @@ class App < Sinatra::Base
 
   post '/auth/signup' do
     result = AuthenticationService::SignUp.call(params)
-    
-    case result
-    when :email_unavailable
-      flash[:notice] = EMAIL_UNAVAILABLE_NOTICE
-      redirect '/auth/signup'
-    when :invalid_parameters
-      flash[:notice] = INVALID_PARAMETERS_NOTICE
-      redirect '/auth/signup'
-    else
-      redirect '/'
-    end
+    continue_with = AuthenticationService::AfterSignUp.call(result)
+
+    flash[:notice] = continue_with[:notice]
+    redirect continue_with[:redirect_path]
   end
 
   post UNAUTHENTICATED_URL do
