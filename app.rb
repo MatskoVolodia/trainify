@@ -5,6 +5,7 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/flash'
 require 'action_view'
+require 'sinatra/redirect_with_flash'
 
 %w[policies models routes services presenters helpers mailers].each do |folder_name|
   Dir.glob("./#{folder_name}/*.rb") { |f| require f }
@@ -19,11 +20,12 @@ class App < Sinatra::Base
 
   helpers ActionView::Helpers::AssetTagHelper,
           ActionView::Helpers::UrlHelper,
+          Sinatra::RedirectWithFlash,
           AuthHelper
 
   register Sinatra::ActiveRecordExtension
   register Sinatra::Flash
-  
+
   use Warden::Manager do |config|
     config.serialize_into_session(&:id)
     config.serialize_from_session { |id| User.find(id) }

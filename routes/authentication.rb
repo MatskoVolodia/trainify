@@ -26,15 +26,12 @@ class App < Sinatra::Base
     result = AuthenticationService::SignUp.call(params)
     continue_with = AuthenticationService::AfterSignUp.call(result)
 
-    flash[:notice] = continue_with[:notice]
-    redirect continue_with[:redirect_path]
+    redirect continue_with[:redirect_path], notice: continue_with[:notice]
   end
 
   post UNAUTHENTICATED_URL do
     session[:return_to] = env['warden.options'][:attempted_path] if session[:return_to].blank?
 
-    flash[:notice] = env['warden.options'][:message]
-
-    redirect '/auth/login'
+    redirect '/auth/login', notice: env['warden.options'][:message]
   end
 end
