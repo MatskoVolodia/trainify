@@ -5,8 +5,6 @@ class AuthenticationService
     end
 
     def call
-      return unless policy.user_info_valid?
-
       user = User.create(email: params[:email], password: params[:password])
       RegistrationMailer.new(email: params[:email]).send if user.persisted?
 
@@ -16,9 +14,5 @@ class AuthenticationService
     private
 
     attr_reader :params
-
-    def policy
-      @policy ||= UserPolicy.new(params)
-    end
   end
 end

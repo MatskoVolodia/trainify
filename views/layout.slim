@@ -15,4 +15,7 @@ html
       a href='/' trainify
       == auth_link
     .container
+      .notice
+        - flash.each do |flash_type, message|
+          div class=flash_type = message
       == yield

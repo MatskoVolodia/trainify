@@ -1,6 +1,7 @@
 class BookingService
   class CreateOrder < ApplicationService
     delegate :params_valid?, to: :policy
+    delegate :id,            to: :current_user, prefix: true
 
     def initialize(args)
       @params       = args[:params]

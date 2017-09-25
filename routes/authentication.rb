@@ -1,6 +1,13 @@
 class App < Sinatra::Base
   UNAUTHENTICATED_URL       = '/auth/unauthenticated'.freeze
   INVALID_LOGIN_INFO_NOTICE = 'Email or password is incorrect'.freeze
+  SUCCESSFUL_SIGN_UP_NOTICE = 'You successfully signed up'.freeze
+
+  %w[/auth/login /auth/signup].each do |path|
+    before path do
+      redirect '/' if current_user
+    end
+  end
 
   get '/auth/login' do
     slim :login
@@ -23,14 +30,18 @@ class App < Sinatra::Base
   end
 
   post '/auth/signup' do
-    result = AuthenticationService::SignUp.call(params)
-    continue_with = AuthenticationService::AfterSignUp.call(result)
+    user = AuthenticationService::SignUp.call(params)
 
-    redirect continue_with[:redirect_path], notice: continue_with[:notice]
+    if user.invalid?
+      flash.now[:alert] = user.errors.full_messages.join(', ')
+      slim :signup
+    else
+      redirect '/', notice: SUCCESSFUL_SIGN_UP_NOTICE
+    end
   end
 
   post UNAUTHENTICATED_URL do
-    session[:return_to] = env['warden.options'][:attempted_path] if session[:return_to].blank?
+    session[:return_to] ||= env['warden.options'][:attempted_path]
 
     redirect '/auth/login', notice: env['warden.options'][:message]
   end
