@@ -17,10 +17,6 @@ class AuthenticationService
 
     attr_reader :params
 
-    def users
-      @users ||= User.where(email: params[:email])
-    end
-
     def policy
       @policy ||= UserPolicy.new(params)
     end
