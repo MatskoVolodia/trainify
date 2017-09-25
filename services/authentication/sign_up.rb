@@ -1,18 +1,19 @@
 class AuthenticationService
   class SignUp < ApplicationService
     def initialize(params)
-      @params = params
+      @email    = params[:email]
+      @password = params[:password]
     end
 
     def call
-      user = User.create(email: params[:email], password: params[:password])
-      RegistrationMailer.new(email: params[:email]).send if user.persisted?
+      user = User.create(email: email, password: password)
+      RegistrationMailer.new(email: email).send if user.persisted?
 
       user
     end
 
     private
 
-    attr_reader :params
+    attr_reader :email, :password
   end
 end
