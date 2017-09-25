@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170912134024) do
+ActiveRecord::Schema.define(version: 20170925073346) do
 
   create_table "cities", force: :cascade do |t|
     t.string "title"
@@ -24,10 +24,10 @@ ActiveRecord::Schema.define(version: 20170912134024) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.string  "user_email"
     t.integer "route",                    null: false
     t.integer "first_class_seats_count"
     t.integer "second_class_seats_count"
+    t.integer "user_id"
   end
 
   create_table "routes", force: :cascade do |t|
