@@ -8,8 +8,7 @@ require 'action_view'
 require 'sinatra/redirect_with_flash'
 
 %w[policies models routes services presenters helpers mailers].each do |folder_name|
-  Dir.glob("./#{folder_name}/*.rb") { |f| require f }
-  Dir.glob("./#{folder_name}/**/*.rb") { |f| require f }
+  require_all folder_name
 end
 
 class App < Sinatra::Base
