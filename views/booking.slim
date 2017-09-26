@@ -17,9 +17,6 @@
         p.tickets-count = @booking.second_class_available_seats
         input#second-class type="number" max=@booking.max_second_class_tickets_count min="0" name="second_class" data-price=@booking.current_prices[:second_class]
         p = "₴#{ @booking.current_prices[:second_class] } each."
-      .card
-        p.card-header Your email:
-        input name="user_email" type="email"
         input hidden="true" name="route_id" value=@booking.route_id
     input type="submit" value="Order"
     p Total:

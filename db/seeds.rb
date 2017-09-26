@@ -1,3 +1,7 @@
+def random_seats_count
+  [100, 200, 300, 500, 1000].sample
+end
+
 # delete all record
 City.delete_all
 Route.delete_all
@@ -11,9 +15,9 @@ Order.delete_all
 first_city_id = City.first.id
 
 # seed trains
-5.times do |i|
+5.times do
   Train.create(
-    serial_number:            Faker::Vehicle.vin, 
+    serial_number:            Faker::Vehicle.vin,
     first_class_seats_count:  random_seats_count,
     second_class_seats_count: random_seats_count
   )
@@ -47,6 +51,5 @@ Config.create(
   valid_since:        '2017-01-01 00:00:00'
 )
 
-def random_seats_count
-  [100, 200, 300, 500, 1000].sample
-end
+# seed users
+User.create(email: 'admin@gmail.com', password: 'admin123')
