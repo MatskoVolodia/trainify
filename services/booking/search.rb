@@ -16,7 +16,7 @@ class BookingService
     attr_reader :route_id
 
     def orders
-      @orders ||= Order.where(route: route_id)
+      @orders ||= Order.where(route_id: route_id)
     end
   end
 end

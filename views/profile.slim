@@ -6,9 +6,13 @@
   p = current_user.email
 
 .tab-content#orders-tab
-  ul
-    - current_user.orders.each do |order|
-      li = order.id
+  - current_user.orders.each do |order|
+    .order
+      p 🚂🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃🚃
+      p = order.route.start.title
+      p = "(#{order.route.departured_at})"
+      p = order.route.destination.title
+      p = "(#{order.route.arrived_at})"
 
 a href='/auth/logout' Logout
 
