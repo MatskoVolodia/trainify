@@ -22,11 +22,15 @@ class BookingService
 
     def create_order
       Order.create(
-        user_id:                  current_user.id,
+        user_id:                  user_id,
         route:                    params[:route_id],
         first_class_seats_count:  params[:first_class].to_i,
         second_class_seats_count: params[:second_class].to_i
       )
+    end
+
+    def user_id
+      @user_id ||= current_user&.id
     end
   end
 end

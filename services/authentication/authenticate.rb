@@ -1,5 +1,7 @@
 class AuthenticationService
   class Authenticate < ApplicationService
+    delegate :password_digest, to: :user, prefix: true
+
     def initialize(params)
       @email              = params[:email]
       @attempted_password = params[:password]
@@ -18,7 +20,7 @@ class AuthenticationService
     end
 
     def user_password
-      BCrypt::Password.new(user.password_digest) if user
+      BCrypt::Password.new(user_password_digest) if user
     end
   end
 end

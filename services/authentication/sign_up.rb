@@ -5,29 +5,20 @@ class AuthenticationService
     end
 
     def call
-      if UserPolicy.new(params).user_info_valid?
-        if email_available?
-          User.create(email: params[:email], password: params[:password])
-          RegistrationMailer.new(email: params[:email]).send
-          :success
-        else
-          :email_unavailable
-        end
-      else
-        :invalid_parameters
-      end
+      return unless policy.user_info_valid?
+
+      user = User.create(email: params[:email], password: params[:password])
+      RegistrationMailer.new(email: params[:email]).send if user.persisted?
+
+      user
     end
 
     private
 
     attr_reader :params
 
-    def email_available?
-      users.count.zero?
-    end
-
-    def users
-      @users ||= User.where(email: params[:email])
+    def policy
+      @policy ||= UserPolicy.new(params)
     end
   end
 end
